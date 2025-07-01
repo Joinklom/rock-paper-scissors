@@ -14,82 +14,102 @@ parameters to take their choices as arguments.  the playRound function should di
 phrase saying who won the round, and increment the different scores depending who winned the round
 
 write logic to play the entire game, considering that the maximum of rounds shjould be of 5 rounds.
-this funciton would be called playGame, and it will call the function playRound to play 5 rounds
-    */
+this funciton would be called playGame, and it will call the function playRound to play 5 round
+*/
 
 
 
-// choises variables
-let humanChoise
+
+
+
+
+
+
+
+
+
+//SOME EXTERNAL VARIABLES THAT WE WILL KEEP USING THROGHOUT THE FUNCTIONS
 let computerChoise
-
-// randome computer choise
-function getComputerChoise() {
-    computerChoise = Math.floor(Math.random() * 3);
-    
-    if (computerChoise === 0) {
-      computerChoise = "rock";
-    } else if (computerChoise === 1) {
-      computerChoise = "paper";
-    } else {
-        computerChoise = "scissors";
-    }
-}
-
-// human choise with a prompt
-
-function getHumanChoise() {
-    humanChoise = prompt("Rock, paper or scissors?");
-    humanChoise = humanChoise.toLowerCase();
-    
-   if (humanChoise === "rock") {
-        rock = console.log("You choose rock")
-    } else if (humanChoise === "paper") {
-        paper = console.log("You choose paper");
-    } else if (humanChoise === "scissors" || humanChoise === "scissor") {
-        scissors = console.log("You choose scissors");    
-    } else {
-        console.log("Not a valid choise");
-    }
-}
-
-// make a score variable with an assigned value of 0. function of the game execution, that tracks the increments of scores per player
+let humanChoise
 let humanScore = 0
 let computerScore = 0
+let gameEnded = false
+let results = ""
 
 
-function playRound() {
 
-    getHumanChoise();
-    getComputerChoise();
-    console.log(`The computer has choose: ${computerChoise}`);
+// THIS GETS THE TEXT OF THE BUTTON PRESSED, ASSIGNING THE humanChoise, AND ACTUALLY STARTS THE WHOLE GAME WITH THE FUNCTION playRound 
+const btnArray = document.querySelector(`div`);
+btnArray.addEventListener(`click`, (event) => {
+    let target = event.target;
+    humanChoise = target.innerText;
+    playRound();
+})
 
-    if ((humanChoise === "rock") && (computerChoise === "scissors")) {
-        humanScore = ++humanScore;
-    } else if ((humanChoise === "paper") && (computerChoise === "rock")) {
-        humanScore = ++humanScore;
-    } else if ((humanChoise === "scissors") && (computerChoise === "paper")) {
-        humanScore = ++humanScore;
-    } else if (humanChoise === computerChoise) {
-       console.log("draw");
+
+
+
+
+
+
+
+
+
+
+//                                                    ALL THE FUNCTIONS ARE BELOW
+
+//RANDOM FUNCTION FOR THE COMPUTER CHOISE:
+function getComputerChoise() {
+    computerChoise = Math.floor(Math.random() * 3);
+    if (computerChoise === 0) {
+        computerChoise = "rock"
+    } else if (computerChoise === 1) {
+        computerChoise = "paper"
     } else {
-        computerScore = ++computerScore;
+        computerChoise = "scissors"
     }
-    
-    console.log(humanScore, computerScore);
 }
-
-/// 5 rounds iteration
-for (i=0; i<5; i++) {
-    playRound()
+//FUNCTION FOR CALCULATING WHO SIGNED SCORE
+function addScore() {
+    console.log(`The computer has choose: ${computerChoise}`);  
+    if ((humanChoise === "rock") && (computerChoise === "scissors")) {
+        humanScore += 1;
+    } else if ((humanChoise == "paper") && (computerChoise === "rock")) {
+        humanScore += 1;
+    } else if ((humanChoise == "scissors") && (computerChoise === "paper")) {
+        humanScore += 1;
+    } else if (humanChoise === computerChoise) {
+    console.log("draw");
+    } else {
+        computerScore += 1;
+    } console.log(humanScore, computerScore);
 }
-
-// game results
-if (humanScore > computerScore) {
-    console.log("Winner winner, chicken dinner!");
-} else if (humanScore === computerScore) {
-    console.log("There isn't a winner, how boring...");
-} else {
-    console.log("The computer has won, glory to the holy machine!");
+//THE FUNCTION THAT GATHERS ALL THE OTHERS, AND KEEP BEING USABLE IF gameEnded IS FALSE
+function playRound() {
+    if (gameEnded === false) {
+        getComputerChoise();
+        addScore();
+        gameOver(); 
+    } else {
+        console.log("Game is ended, reload the page")
+    }
 }
+//THIS ENDS THE GAME ONLY WHEN ONE OF THE PLAYERS GET TO 5 POINTS. IT ALSO CHANGES THE gameEnded VARIABLE TO TRUE, SO PLAYROUND CAN STOP
+function gameOver() {
+    if (humanScore === 5) {
+        results = "Human wins"
+        gameEnded = true
+        console.log (results)
+    } else if (computerScore === 5) {
+        results = "Computer wins"
+        gameEnded = true
+        console.log (results)
+    } 
+} 
 
+
+
+
+
+
+ 
