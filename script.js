@@ -71,6 +71,7 @@ function getComputerChoise() {
 }
 //FUNCTION FOR CALCULATING WHO SIGNED SCORE
 function addScore() {
+    choiceDiv.textContent = (`The computer has choose: ${computerChoise}`)
     console.log(`The computer has choose: ${computerChoise}`);  
     if ((humanChoise === "rock") && (computerChoise === "scissors")) {
         humanScore += 1;
@@ -83,6 +84,9 @@ function addScore() {
     } else {
         computerScore += 1;
     } console.log(humanScore, computerScore);
+    scoreDiv.textContent = (humanScore + " " + computerScore);
+
+
 }
 //THE FUNCTION THAT GATHERS ALL THE OTHERS, AND KEEP BEING USABLE IF gameEnded IS FALSE
 function playRound() {
@@ -96,6 +100,7 @@ function playRound() {
 }
 //THIS ENDS THE GAME ONLY WHEN ONE OF THE PLAYERS GET TO 5 POINTS. IT ALSO CHANGES THE gameEnded VARIABLE TO TRUE, SO PLAYROUND CAN STOP
 function gameOver() {
+    
     if (humanScore === 5) {
         results = "Human wins"
         gameEnded = true
@@ -105,8 +110,18 @@ function gameOver() {
         gameEnded = true
         console.log (results)
     } 
-} 
+    nuovoDiv.textContent = results;
+}
 
+
+const scoreDiv = document.createElement(`div`);
+const choiceDiv = document.createElement(`div`)
+const nuovoDiv = document.createElement(`div`);
+const genitore = document.querySelector(`body`);
+genitore.append(choiceDiv);
+genitore.append(scoreDiv);
+genitore.append(nuovoDiv);
+    
 
 
 
